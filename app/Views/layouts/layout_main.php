@@ -180,7 +180,7 @@
     <ul class="navbar-nav">
     <li class="nav-item-b">
       <a class="nav-link" href="<?php echo site_url('cadastro') ?>"><i class="fa fa-user" aria-hidden="true"></i> Cadastro</a></a>
-      <a class="nav-link" href="<?php echo site_url('login') ?>"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a></a>
+      <a class="nav-link" href="<?php echo site_url('users') ?>"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a></a>
     </li>
     </ul>
   </div>
