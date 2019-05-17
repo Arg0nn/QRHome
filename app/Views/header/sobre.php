@@ -22,7 +22,7 @@
                 <a href="<?php echo site_url('Main') ?>">Home</a>
               </li>
               <li class="breadcrumb-item active" aria-current="page">
-                About
+                Sobre
               </li>
             </ol>
           </nav>
@@ -64,18 +64,11 @@
                   <br> nibh.</h3>
               </div>
               <p class="color-text-a">
-                Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vivamus magna justo, lacinia eget
-                consectetur sed, convallis
-                at tellus. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum
-                ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit
-                neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
+                O grupo "Element" fundado por 7 integrantes foi formado em 2018 com o intuito de criar um site para o Trabalho de Conclusão de Curso. Inicialmente, o grupo pretendia criar um app para android e IOS onde forneceria recursos para encontrar um imóvel ideal para o usuario com base em suas necessidades. 
               </p>
               <p class="color-text-a">
-                Sed porttitor lectus nibh. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus.
-                Mauris blandit aliquet
-                elit, eget tincidunt nibh pulvinar a. Vivamus magna justo, lacinia eget consectetur sed,
-                convallis at tellus.
-              </p>
+                 Como o app seria feito em react native que é uma linguagem muito recente no mercado e seus materias de estudo são muito limitados, o grupo decidiu criar um site responsivo que além de facilitar no desenvolvimento e facilitaria o uso já que o usuario não precisaria instalar nada.      
+                      </p>
             </div>
           </div>
         </div>
