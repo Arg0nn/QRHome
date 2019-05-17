@@ -76,7 +76,9 @@ class Users extends BaseController
         // init session
         $session_data = array(
             'id_user' => $data['id_user'],
-            'name' => $data['name']
+            'name' => $data['name'],
+            'profile' => $data['profile']
+
         );
 
         $this->session->set($session_data);
@@ -91,6 +93,13 @@ class Users extends BaseController
             return;
         }
 
+        // check 
+        if($this->checkProfile('admin')){
+            echo 'Sou admin';
+        } else {
+            echo 'Não sou admin';
+        }
+
         // show homepage view
         echo view('users/homepage');
     }
@@ -101,12 +110,6 @@ class Users extends BaseController
 
         $this->session->destroy();
         return redirect()->to(site_url('users'));
-    }
-
-    // ==================================================
-    private function checkSession(){
-        // check if session exists
-        return $this->session->has('id_user');
     }
 
     // ==================================================
@@ -168,8 +171,31 @@ class Users extends BaseController
             $users->redefinePassword($id_user, $nova_password);
         }
 
-        
-
     }
 
+    public function teste($value){
+        if ($this->checkProfile($value)){
+            echo 's';
+        } else {
+            echo 'n';
+        }
+    }
+
+    // ==================================================
+    //      PRIVATE
+    // ==================================================
+    private function checkSession(){
+        // check if session exists
+        return $this->session->has('id_user');
+    }
+
+    // ==================================================
+    private function checkProfile($profile){
+        // check if the user has permission to access feature
+        if(preg_match("/$profile/",$this->session->profile)){
+            return true;
+        } else{
+            return false;
+        }
+    }
 }

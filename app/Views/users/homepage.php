@@ -36,6 +36,8 @@
 
     <div>Olá, <?php echo $s->name . ' (' . $s->id_user . ')'?></div>
 
+    <div>O meu perfil é de: <?php echo $s->profile ?></div>
+
     <a href="<?php echo site_url('users/logout') ?>">Logout</a>
 
 <?php $this->endSection()?>
