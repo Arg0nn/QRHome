@@ -2,6 +2,7 @@
 
 use CodeIgniter\Controller;
 use App\Models\UsersModel;
+use Tests\Support\Models\UserModel;
 
 class Users extends BaseController
 {
@@ -12,10 +13,8 @@ class Users extends BaseController
         $this->session = session();
     }
 
-
     // ==================================================
-	public function index()
-	{
+	public function index(){
         // check if there is an active session
         if($this->checkSession()){
             // active session
@@ -95,6 +94,7 @@ class Users extends BaseController
         // show homepage view
         echo view('users/homepage');
     }
+
     // ==================================================
     public function logout(){
         // logout
@@ -113,6 +113,63 @@ class Users extends BaseController
     public function recover(){
         // shows form to recover password
         echo view('users/recover_password');
+    }
+
+    // ==================================================
+    public function reset_password(){
+        $request = \Config\Services::request();
+        $email = $request->getPost('text_email');
+        $users = new UsersModel();
+        $result = $users->checkEmail($email);
+        if(count($result) != 0){
+            $users->sendPurl($email, $result[0]['id_user']);
+
+            echo 'existe';
+        } else {
+            echo 'Não existe o email associado';
+        }        
+    }
+
+    // ==================================================
+    public function redefine_password($purl){
+        $users = new UsersModel();
+        $results = $users->getPurl($purl);
+        if(count($results) == 0){
+            // no purl found. Redirect to main
+            return redirect()->to(site_url('main'));
+
+        } else {
+            $data['user'] = $results[0];
+            // show redefine view
+            echo view('users/redefine_password', $data);
+
+        }
+    }
+
+    // ==================================================
+    public function redefine_password_submit(){
+
+        $request = \Config\Services::request();
+        $id_user = $request->getPost('text_id_user');
+        $nova_password = $request->getPost('text_nova_password');
+        $nova_password_repetida = $request->getPost('text_repetir_password');
+
+        $error = '';
+
+        // verify if both passwords match
+        if($nova_password != $nova_password_repetida){
+            $error = "As senhas não são iguais";
+            die($error);
+        }
+
+        // updates the new passwords
+        if($error == ''){
+            $users = new UsersModel();
+            $users->redefinePassword($id_user, $nova_password);
+        }
+
+        
+
     }
 
 }

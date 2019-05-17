@@ -39,7 +39,7 @@
 <div class="container">
   <div class="row">
     <div class="col-6 offset-3">
-      <form action="<?php echo site_url('users/reset_password')?>">
+      <form action="<?php echo site_url('users/reset_password')?>" method="post">
         <div class="form-group">
           <input type="email" name="text_email" placeholder="Email" required class="form-control">
         </div>
