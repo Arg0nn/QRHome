@@ -123,6 +123,13 @@ class UsersModel extends Model
 
     }
 
+    // ==================================================
+    public function getUsers(){
+        // return all users in the database
+        $query = "SELECT * FROM users";
+        return $this->db->query($query)->getResult('array');
+
+    }
 
     // ==================================================
     private function randomPassword($numChars = 8){

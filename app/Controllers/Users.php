@@ -93,15 +93,14 @@ class Users extends BaseController
             return;
         }
 
-        // check 
+        // check if user is admin
+        $data = array();
         if($this->checkProfile('admin')){
-            echo 'Sou admin';
-        } else {
-            echo 'Não sou admin';
+            $data['admin'] = true;
         }
 
         // show homepage view
-        echo view('users/homepage');
+        echo view('users/homepage', $data);
     }
 
     // ==================================================
@@ -174,7 +173,7 @@ class Users extends BaseController
     }
 
     public function teste($value){
-        if ($this->checkProfile($value)){
+        if ($this-> checkProfile($value)){
             echo 's';
         } else {
             echo 'n';
@@ -197,5 +196,39 @@ class Users extends BaseController
         } else{
             return false;
         }
+    }
+
+    // ==================================================
+    public function admin_users(){
+        // check if the user has permission
+        if($this->checkProfile('admin') == false){
+            return redirect()->to(site_url('users'));
+        }
+
+        $users = new UsersModel();
+        $results = $users->getUsers();
+        $data['users'] = $results;
+
+        echo view('users/admin_users', $data);
+    }
+
+    // ==================================================
+    public function admin_new_user(){
+        // adds a new user to the database
+        $error = '';
+        $data = array();
+        $request = \Config\Services::request();
+
+        // if there was a submission
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            // redirect to the table users
+
+        }
+
+        // chech if there is an error
+        if($error != ''){
+            $data['error'] = $error;
+        }
+        echo view('users/admin_new_user', $data);
     }
 }

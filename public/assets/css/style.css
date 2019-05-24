@@ -5,6 +5,12 @@
   License: https://bootstrapmade.com/license/
 */
 
+/* *{
+  -webkit-box-shadow: inset 0px 0px 0px 1px rgb(255, 0, 200, 0.3);
+  -moz-box-shadow: inset 0px 0px 0px 1px rgba(255, 0, 200, 0.3);
+  box-shadow: inset 0px 0px 0px 1px rgba(255, 0, 200, 0.3);
+}*/
+
 /*======================================
 //--//-->   STYLES GENERALES
 ======================================*/
