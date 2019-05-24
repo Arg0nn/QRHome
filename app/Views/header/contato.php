@@ -43,13 +43,26 @@
 
       <form action="<?php echo site_url("main/contato enviar") ?>"  method="post">
       
-        <div class=>
+        <div class="form-group">
+          <label>Nome:</label>
+          <input type="text" name="text_nome" clas="form-control">
+        </div>
 
-        <input type="text" name="text_nome" clas="form-control">
-        <input type="email" name="text_email" clas="form-control">
-        <textarea name="text_menssagem" rows="5" clas="form-control">
+        <div class="form-group">
+          <label>E-mail:</label>
+          <input type="email" name="text_email" clas="form-control">          
+        </div>
 
-        </textarea>
+        <div class="form-group">
+          <label>Mensagem:</label>
+          <textarea name="text_menssagem" rows="5" clas="form-control"></textarea>
+        </div>
+
+        
+        <div class="row">
+          <div class=col-8></div>
+          <div class=col-4></div>
+        </div>
 
       </form>
 
