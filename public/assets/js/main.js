@@ -19,6 +19,13 @@ $('#btn-password').click(
     }
 );
 
+$('#btn-limpar').click(
+	function(){
+		$('input[name=text_password]').val('');
+		$('input[name=text_password_repeat]').val('');
+	}
+);
+
 
 (function ($) {
   "use strict";

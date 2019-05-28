@@ -222,7 +222,40 @@ class Users extends BaseController
         // if there was a submission
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             // redirect to the table users
+            $request = \Config\Services::request();
+            $dados = $request->getPost();
 
+            // check if fields are filled
+            if(
+                $dados['text_username'] ==  '' ||
+                $dados['text_password'] ==  '' ||
+                $dados['text_password_repeat'] ==  '' ||
+                $dados['text_name'] ==  '' ||
+                $dados['text_email'] ==  ''
+            ){
+                $error = 'Preencha todos os campos';
+            }
+
+            // checks whether passwords match
+            if($error == ''){
+                if($dados['text_password'] != $dados['text_password_repeat']){
+                    $error = 'As senhas não coincidem';
+                }
+            }
+
+            // check if at least one checkbox has been activated
+            if(!isset($dados['check_admin'])&&
+               !isset($dados['check_realstate'])&&
+               !isset($dados['check_user'])){
+                $error = 'Ative, pelomenos um tipo de profile';
+            }
+
+            if($error == ''){
+                die('OK');
+            }
+            
+            
+            
         }
 
         // chech if there is an error

@@ -50,19 +50,25 @@
 
   <p><input type="text" name="text_password"  placeholder="Senha" id="text_password" required></p>
   <p><input type="text" name="text_password_repeat"  placeholder="Repetir Senha" id="text_password_repeat" required></p>
-  <button class="btn btn-primary btn-sm" type="button" id="btn-password">Gerar Senha</button>
 
-  <p><input type="text" name=""  placeholder="Name" id="text_name" required></p>
-  <p><input type="email" name="" placeholder="Email" id="text_email" required></p>
-</form>
+  <div class="form-inline mb-2">
+  <button class="btn btn-primary btn-sm" type="button" id="btn-password">Gerar Senha</button>
+  <button class="btn btn-secondary btn-sm" type="button" id="btn-limpar">Limpar</button>
+  </div>
+
+
+  <p><input type="text" name="text_name"  placeholder="Name" id="text_name" required></p>
+  <p><input type="email" name="text_email" placeholder="Email" id="text_email" required></p>
+
 <!-- profile -->
+<label><input type="checkbox" name="check_user" checked> User</label><br>
+<label><input type="checkbox" name="check_realestate"> Real Estate</label><br>
 <label><input type="checkbox" name="check_admin"> Admin</label><br>
-<label><input type="checkbox" name="check_user"> User</label><br>
-<label><input type="checkbox" name="check_real estate"> Real Estate</label><br>
 <div>
   <a href="<?php echo site_url('users/admin_users') ?>" class="btn btn-secondary">Cancelar</a>
   <button class="btn btn-primary">Adicionar</button>
 </div>
+</form>
 
     
 
