@@ -132,6 +132,57 @@ class UsersModel extends Model
     }
 
     // ==================================================
+    public function checkExistingUser(){
+        // check if there already an user with the same username or email adress
+        $request = \Config\Services::request();
+        $dados = $request->getPost();
+
+        $params = array(
+            $dados['text_username'],
+            $dados['text_email']
+        );
+
+        return $this->db->query('SELECT id_user FROM users WHERE username = ? OR email = ?',$params)->getResult('array');
+    }
+
+    // ==================================================
+    public function addNewUser(){
+        $request = \Config\Services::request();
+        $dados = $request->getPost();
+
+        // profile
+        $profileTemp = array();
+        if(isset($dados['check_admin'])){
+            array_push($profileTemp, 'admin');
+        }
+
+        // real estate
+        $profileTemp = array();
+        if(isset($dados['check_realestate'])){
+            array_push($profileTemp, 'realestate');
+        }
+
+        // user
+        $profileTemp = array();
+        if(isset($dados['check_user'])){
+            array_push($profileTemp, 'user');
+        }
+
+        $profile = implode(',' , $profileTemp);
+
+        $params = array(
+            $dados['text_username'],
+            md5(sha1($dados['text_password'])),
+            $dados['text_name'],
+            $dados['text_email'],
+            $profile
+        );
+
+        $this->db->query("INSERT INTO users(username,passwrd,name,email,profile) VALUES(?,?,?,?,?)", $params);
+
+    }
+
+    // ==================================================
     private function randomPassword($numChars = 8){
         // generates a random password
         $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';

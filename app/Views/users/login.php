@@ -1,6 +1,6 @@
 <?php
 
-	$this->extend('layouts/layout_main');
+	$this->extend('layouts/layout_mainnew');
 
 ?>
 

@@ -77,6 +77,7 @@ class Users extends BaseController
         $session_data = array(
             'id_user' => $data['id_user'],
             'name' => $data['name'],
+            'username' => $data['username'],
             'profile' => $data['profile']
 
         );
@@ -172,14 +173,6 @@ class Users extends BaseController
 
     }
 
-    public function teste($value){
-        if ($this-> checkProfile($value)){
-            echo 's';
-        } else {
-            echo 'n';
-        }
-    }
-
     // ==================================================
     //      PRIVATE
     // ==================================================
@@ -217,7 +210,6 @@ class Users extends BaseController
         // adds a new user to the database
         $error = '';
         $data = array();
-        $request = \Config\Services::request();
 
         // if there was a submission
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -225,7 +217,7 @@ class Users extends BaseController
             $request = \Config\Services::request();
             $dados = $request->getPost();
 
-            // check if fields are filled
+            // Check if fields are filled
             if(
                 $dados['text_username'] ==  '' ||
                 $dados['text_password'] ==  '' ||
@@ -236,22 +228,34 @@ class Users extends BaseController
                 $error = 'Preencha todos os campos';
             }
 
-            // checks whether passwords match
+            // Checks whether passwords match
             if($error == ''){
                 if($dados['text_password'] != $dados['text_password_repeat']){
                     $error = 'As senhas não coincidem';
                 }
             }
 
-            // check if at least one checkbox has been activated
-            if(!isset($dados['check_admin'])&&
-               !isset($dados['check_realstate'])&&
-               !isset($dados['check_user'])){
-                $error = 'Ative, pelomenos um tipo de profile';
+            // Check if at least one checkbox has been activated
+            if($error == ''){
+                 if(!isset($dados['check_admin'])&&
+                    !isset($dados['check_realstate'])&&
+                    !isset($dados['check_user'])){
+                    $error = 'Ative, pelomenos um tipo de profile';
+                }
+            }
+
+            // Check if someone with the same username or email already exists
+            $model = new UsersModel();
+            if($error == ''){
+                $result = $model->checkExistingUser();
+                if(count($result)!= 0){
+                    $error = "Email ou Username já cadastrados";
+                }
             }
 
             if($error == ''){
-                die('OK');
+                $model->addNewUser();
+                return redirect()->to(site_url('users/admin_users'));
             }
             
             

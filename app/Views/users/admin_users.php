@@ -33,7 +33,19 @@
   </section>
   <!--/ Intro Single End /-->
 
-  <div class ="mt-2 mb-2"><a href="<?php echo site_url('users/admin_new_user') ?>" class="btn btn-primary">Novo usuário</a></div>
+  <div class="row">
+    <div class="col-10">
+      <div class ="mt-2 mb-2">
+        <a href="<?php echo site_url('users/admin_new_user') ?>" class="btn btn-primary">Novo usuário</a>
+      </div>
+    </div>
+    <div class="col-2 text-right align-self-center">
+      <a href="<?php echo site_url('users') ?>" class="btn btn-danger">
+        <i class="fa fa-times"></i>
+      </a>
+    </div>
+  </div>
+
 
   <div>
     <table class="table table-striped">
@@ -51,10 +63,17 @@
             <?php foreach($users as $user): ?>
             <tr>
                 <!-- editar e eliminar -->
-                <td>
+                <?php if($s->id_user == $user['id_user']): ?>
+                  <td>
+                    <span class="btn btn-secondary btn-sm"><i class="fa fa-pencil"></i></span>
+                    <span class="btn btn-secondary btn-sm"><i class="fa fa-trash"></i></span>
+                  <td>
+                <?php else: ?>
+                  <td>
                     <a href="" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
                     <a href="" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>   
-                <td>
+                  <td>
+                <?php endif;?>
 
                 <td><?php echo $user['username'] ?><td>
                 <td><?php echo $user['name'] ?><td>
