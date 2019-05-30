@@ -205,69 +205,81 @@ class Users extends BaseController
         echo view('users/admin_users', $data);
     }
 
-    // ==================================================
-    public function admin_new_user(){
-        // adds a new user to the database
-        $error = '';
-        $data = array();
+	// =====================================================
+	public function admin_new_user(){
+		
+		// check if session exists (if yes goto homepage)
+		if(!$this->checkSession()){
+			$this->homePage();
+			return;
+		}
 
-        // if there was a submission
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
-            // redirect to the table users
-            $request = \Config\Services::request();
-            $dados = $request->getPost();
+		// check if the user has permission
+		if($this->checkProfile('admin') == false){
+			return redirect()->to(site_url('users'));
+		}
 
-            // Check if fields are filled
-            if(
-                $dados['text_username'] ==  '' ||
-                $dados['text_password'] ==  '' ||
-                $dados['text_password_repeat'] ==  '' ||
-                $dados['text_name'] ==  '' ||
-                $dados['text_email'] ==  ''
-            ){
-                $error = 'Preencha todos os campos';
-            }
+		// adds a new user to the database
+		$error = '';
+		$data = array();
+		
+		// if there was a submission
+		if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-            // Checks whether passwords match
-            if($error == ''){
-                if($dados['text_password'] != $dados['text_password_repeat']){
-                    $error = 'As senhas não coincidem';
-                }
-            }
+			// ir buscar os dados do post
+			$request = \Config\Services::request();
+			$dados = $request->getPost();
+			
+			// verifica se vieram os dados corretos
+			if(
+				$dados['text_username'] == '' ||
+				$dados['text_password'] == '' ||
+				$dados['text_password_repetir'] == '' ||
+				$dados['text_name'] == '' ||
+				$dados['text_email'] == ''
+			){
+				$error = 'Preencha todos os campos de texto.';
+			}
 
-            // Check if at least one checkbox has been activated
-            if($error == ''){
-                 if(!isset($dados['check_admin'])&&
-                    !isset($dados['check_realstate'])&&
-                    !isset($dados['check_user'])){
-                    $error = 'Ative, pelomenos um tipo de profile';
-                }
-            }
+			// verificar se as password coincidem
+			if($error == ''){
+				if($dados['text_password'] != $dados['text_password_repetir']){
+					$error = 'As passwords não coincidem.';
+				}
+			}
 
-            // Check if someone with the same username or email already exists
-            $model = new UsersModel();
-            if($error == ''){
-                $result = $model->checkExistingUser();
-                if(count($result)!= 0){
-                    $error = "Email ou Username já cadastrados";
-                }
-            }
+			if($error == ''){
+				// verifica se, pelo menos, uma check de profile foi checkada
+				if(	!isset($dados['check_admin']) &&
+					!isset($dados['check_moderator']) &&
+					!isset($dados['check_user'])){
+						$error = 'Indique, pelo menos, um tipo de profile.';
+					}
+			}
 
-            if($error == ''){
-                $model->addNewUser();
-                return redirect()->to(site_url('users/admin_users'));
-            }
-            
-            
-            
-        }
+			// verificar se já existe um user com o mesmo username ou email			
+			$model = new UsersModel();
+				if($error == ''){
+				$result = $model->checkExistingUser();
+				if(count($result)!=0){
+					$error = "Já existe um utilizador com esses dados.";
+				}
+			}
 
-        // chech if there is an error
-        if($error != ''){
-            $data['error'] = $error;
-        }
-        echo view('users/admin_new_user', $data);
-    }
+			if($error == ''){								
+				$model->addNewUser();								
+				return redirect()->to(site_url('users/admin_users'));
+			}			
+		}
+
+		// check if there is an error
+		if($error != ''){
+			$data['error'] = $error;
+		}
+
+		echo view('users/admin_new_user', $data);
+
+	}
 
     // ==================================================
     public function admin_edit_user($id_user){
