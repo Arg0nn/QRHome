@@ -1,6 +1,6 @@
 <?php
 
-    $this->extend('layouts/layout_main');
+    $this->extend('layouts/layout_mainnew');
     $s = session();
 
 ?>
@@ -32,8 +32,6 @@
     </div>
   </section>
   <!--/ Intro Single End /-->
-
-  <?php echo view('users/userbar') ?>
 
     <div>Olá, <?php echo $s->name . ' (' . $s->id_user . ')'?></div>
 

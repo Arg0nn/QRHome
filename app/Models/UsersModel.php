@@ -132,6 +132,15 @@ class UsersModel extends Model
     }
 
     // ==================================================
+    public function getUser($id_user){
+        // return a user in the database
+        $params = array($id_user);
+        $query = "SELECT * FROM users WHERE id_user = ?";
+        return $this->db->query($query, $params)->getResult('array');
+
+    }
+
+    // ==================================================
     public function checkExistingUser(){
         // check if there already an user with the same username or email adress
         $request = \Config\Services::request();
